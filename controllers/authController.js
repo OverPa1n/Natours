@@ -2,7 +2,6 @@ const crypto = require('crypto');
 const {promisify} = require('util');
 const User = require('./../models/userModel');
 const catchAsync = require('../utils/catchAsync');
-const validate = require('../utils/validation');
 const AppError = require('../utils/appError');
 const jwt = require('jsonwebtoken');
 const Email = require('../utils/email');
@@ -35,24 +34,20 @@ const createSendToken = (user, statusCode, res) => {
   })
 }
 
-exports.signup = catchAsync(async (req,res,next) => {
-  let newUser = await validate(req.body, 'user');
+exports.signup = catchAsync(async (req, res, next) => {
+  const newUser = await User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    passwordConfirm: req.body.passwordConfirm
+  });
+
   const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(url);
-  console.log(newUser);
-  await new Email(newUser.value, url).sendWelcome();
 
-  if (!newUser.error) {
-
-  newUser = await User.create(newUser.value);
-
-  } else {
-    return next(new AppError(newUser.error.details[0].message, 404));
-  }
+  await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, res);
-
-})
+});
 
 exports.login = catchAsync(async (req,res,next) => {
   const {email,password} = req.body;

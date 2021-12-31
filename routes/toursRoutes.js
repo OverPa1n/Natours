@@ -29,7 +29,9 @@ router.route('/tour-stats')
 router.route('/monthly-plan/:year')
   .get(authController.protect, authController.restrictTo('admin', 'lead-guide', 'guide'), getMonthlyPlan);
 router.route('/:id')
-  .get(getTourById)
+  .get(
+    authController.protect,
+    getTourById)
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),

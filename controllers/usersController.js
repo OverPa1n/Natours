@@ -75,7 +75,7 @@ const getAllUsers = factory.getAll(User);
 const getUser = factory.getOne(User);
 const deleteUser = factory.deleteOne(User);
 
-exports.updateMe = catchAsync(async (req, res, next) => {
+const updateMe = catchAsync(async (req, res, next) => {
     // 1) Create error if user POSTs password data
     if (req.body.password || req.body.passwordConfirm) {
         return next(
