@@ -7,7 +7,7 @@ import { showAlert } from './alerts';
 export const bookTour = async tourId => {
   try {
     // 1) Get checkout session from API
-    const currentSession = await axios(`http://localhost:3000/api/v1/bookings/checkout-session/${tourId}`, {
+    const currentSession = await axios(`/api/v1/bookings/checkout-session/${tourId}`, {
       method: 'GET'
     });
 

@@ -154,7 +154,6 @@ const getToursWithin = catchAsync(async (req,res,next) => {
         next(new AppError('Please provide latitude and longitude in the format lat, lng.', 400));
     }
 
-    console.log(distance, lat, lng, unit);
     const tours = await Tour.find({ startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } } });
 
     res.status(200).json({

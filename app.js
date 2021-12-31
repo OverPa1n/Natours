@@ -16,6 +16,7 @@ const hpp = require('hpp');
 const path = require('path');
 const viewRouter = require('./routes/viewRoutes');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 app.set('view engine', 'pug');
 // Middleware that Serving static files
@@ -65,6 +66,8 @@ app.use(hpp({
       'duration', 'ratingsAverage', 'ratingsQuantity','maxGroupSize','difficulty'
     ]
 }));
+
+app.use(compression());
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
