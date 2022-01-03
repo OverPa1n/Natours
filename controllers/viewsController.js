@@ -69,6 +69,17 @@ exports.getLoginForm = catchAsync(async (req,res) => {
   })
 })
 
+exports.getSignupForm = catchAsync(async (req, res) => {
+  res.status(200)
+    .set(
+      'Content-Security-Policy',
+      "default-src 'self' https://unpkg.com/axios/dist/axios.min.js ;base-uri"
+    )
+    .render('signup', {
+      title: 'Sign up'
+    })
+})
+
 exports.getAccount = (req,res) => {
   res.status(200).render('account', {
     title: 'Your account'

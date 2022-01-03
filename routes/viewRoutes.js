@@ -20,13 +20,13 @@ router.get(
   viewsControllers.getMyTours
 );
 
-router.get('/tour/:slug', authController.isLoggedIn, viewsControllers.getTour);
+router.get('/tour/:slug', authController.protect, authController.isLoggedIn, viewsControllers.getTour);
 
 router.get('/login', authController.isLoggedIn, viewsControllers.getLoginForm);
 
+router.get('/signup', viewsControllers.getSignupForm)
+
 router.get('/me', authController.protect, viewsControllers.getAccount);
-
-
 
 // router.post('/submit-user-data', authController.protect, viewsControllers.updateUserData)
 
